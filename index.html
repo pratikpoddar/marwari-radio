@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="mwr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Marwari Radio — म्हारो रेडियो</title>
+<meta name="description" content="Occasion-based Marwari and Rajasthani radio, hosted by Tai — who speaks Marwari between the songs. Bhajans at 7 AM, sangeet in wedding season, folk on the train home.">
+<meta name="theme-color" content="#4a0f18">
+
+<!-- Open Graph / WhatsApp. On deploy, replace the og:url and og:image values
+     with your absolute https URLs — WhatsApp will not resolve relative paths. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Marwari Radio">
+<meta property="og:title" content="Marwari Radio — राम राम सा, सुणो">
+<meta property="og:description" content="Five stations, one Tai who talks in Marwari between the songs. Bhakti Bela at 7 AM, Shaadi Sangeet in wedding season, Rail Yatra on the way home.">
+<meta property="og:url" content="./">
+<meta property="og:image" content="assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Tiro+Devanagari+Hindi:ital@0;1&family=Marcellus&family=Rye&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- first-tap gate: mobile autoplay policy, AudioContext, and speech all need a gesture -->
+<div class="gate" id="gate">
+  <div class="gate__card">
+    <div class="gate__dial" aria-hidden="true">
+      <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" class="g1"/><circle cx="60" cy="60" r="40" class="g2"/>
+        <g class="g3"><line x1="60" y1="18" x2="60" y2="30"/><line x1="60" y1="90" x2="60" y2="102"/><line x1="18" y1="60" x2="30" y2="60"/><line x1="102" y1="60" x2="90" y2="60"/></g>
+        <line x1="60" y1="60" x2="88" y2="34" class="g4"/><circle cx="60" cy="60" r="6" class="g5"/></svg>
+    </div>
+    <h1 class="gate__title">म्हारो रेडियो</h1>
+    <p class="gate__sub">Marwari Radio</p>
+    <p class="gate__line" id="gate-line">राम राम सा — रेडियो चालू करां?</p>
+    <button class="gate__btn" id="gate-btn" type="button">चालू करो <span>Turn it on</span></button>
+    <p class="gate__note" id="gate-note">Tai will greet you and start the songs.</p>
+  </div>
+</div>
+
+<main class="shelf">
+  <div class="radio" id="radio">
+    <span class="filigree filigree--tl" aria-hidden="true"></span>
+    <span class="filigree filigree--tr" aria-hidden="true"></span>
+    <span class="filigree filigree--bl" aria-hidden="true"></span>
+    <span class="filigree filigree--br" aria-hidden="true"></span>
+
+    <div class="toran" id="toran" aria-hidden="true"></div>
+
+    <div class="radio__body">
+
+      <!-- ---------------- the tuning dial ---------------- -->
+      <section class="dial" aria-labelledby="dial-h">
+        <h2 class="sr-only" id="dial-h">Tuning dial — five stations</h2>
+        <div class="dial__strip" id="dial-strip">
+          <div class="dial__ticks" aria-hidden="true"></div>
+          <div class="dial__needle" id="needle" aria-hidden="true"><i></i></div>
+          <div class="dial__marks" id="dial-marks" role="tablist" aria-label="Stations"></div>
+        </div>
+        <div class="dial__knobs" aria-hidden="true">
+          <span class="knob"></span>
+          <span class="dial__brand">MARWARI · RADIO</span>
+          <span class="knob knob--sm"></span>
+        </div>
+      </section>
+
+      <!-- ---------------- station plate ---------------- -->
+      <section class="plate" id="plate" aria-live="off">
+        <p class="plate__name" id="plate-name">—</p>
+        <p class="plate__tagline" id="plate-tagline"></p>
+        <p class="plate__occasion" id="plate-occasion"></p>
+      </section>
+
+      <!-- ---------------- now playing, inside a jharokha arch ---------------- -->
+      <section class="jharokha" aria-labelledby="np-h">
+        <h2 class="sr-only" id="np-h">Now playing</h2>
+        <div class="jharokha__arch" aria-hidden="true">
+          <svg viewBox="0 0 300 30" preserveAspectRatio="none">
+            <path class="arch-fill" d="M0,0 H300 V6 q -25,24 -50,0 q -25,24 -50,0 q -25,24 -50,0 q -25,24 -50,0 q -25,24 -50,0 q -25,24 -50,0 Z"/>
+          </svg>
+        </div>
+        <div class="np">
+          <p class="np__eyebrow"><span class="np__live" id="np-live"></span><span id="np-station">—</span></p>
+          <p class="np__title" id="np-title">—</p>
+          <p class="np__roman" id="np-roman"></p>
+          <p class="np__artist" id="np-artist"></p>
+          <div class="np__bar" aria-hidden="true"><i id="np-fill"></i></div>
+          <p class="np__time" aria-hidden="true"><span id="np-elapsed">0:00</span><span id="np-index"></span></p>
+        </div>
+      </section>
+
+      <!-- ---------------- the host card (Tai) ---------------- -->
+      <section class="hostcard" id="hostcard" aria-labelledby="host-h">
+        <h2 class="sr-only" id="host-h">Tai says</h2>
+        <div class="hostcard__motif" aria-hidden="true">
+          <svg viewBox="0 0 64 64">
+            <path class="hm-arch" d="M8,60 L8,26 C8,14 19,4 32,4 C45,4 56,14 56,26 L56,60 Z"/>
+            <circle class="hm-line" cx="32" cy="26" r="11"/>
+            <path class="hm-line" d="M21,24 C15,20 13,26 17,29"/>
+            <path class="hm-line" d="M43,24 C49,20 51,26 47,29"/>
+            <path class="hm-line" d="M32,32 C32,40 27,42 25,39 C23,36 27,34 29,37"/>
+            <path class="hm-line" d="M26,15 C28,10 36,10 38,15"/>
+            <circle class="hm-dot" cx="32" cy="9" r="2"/>
+            <path class="hm-line" d="M14,52 C20,46 26,50 32,50 C38,50 44,46 50,52"/>
+          </svg>
+        </div>
+        <div class="hostcard__text">
+          <p class="hostcard__who">ताई कहै — <span>Tai says</span></p>
+          <p class="hostcard__dev" id="host-dev">—</p>
+          <p class="hostcard__rom" id="host-rom"></p>
+          <p class="hostcard__en" id="host-en"></p>
+        </div>
+        <span class="hostcard__mic" id="host-mic" aria-hidden="true"></span>
+      </section>
+
+      <!-- ---------------- controls ---------------- -->
+      <section class="controls" aria-label="Playback controls">
+        <button class="btn btn--icon" id="btn-sleep" type="button" aria-label="Sleep timer" aria-haspopup="true" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
+          <span class="btn__tag" id="sleep-tag"></span>
+        </button>
+
+        <button class="btn btn--play" id="btn-play" type="button" aria-label="Play">
+          <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7Z"/></svg>
+          <svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7Zm6.5 0H17v14h-3.5Z"/></svg>
+        </button>
+
+        <button class="btn btn--icon" id="btn-next" type="button" aria-label="Next song">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5l9 7-9 7Zm10 0h2.5v14H16Z"/></svg>
+          <span class="btn__tag">आगै</span>
+        </button>
+
+        <button class="btn btn--icon" id="btn-share" type="button" aria-label="Share this station">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a3 3 0 1 0-2.8-4H15L8.8 7.6a3 3 0 1 0 0 8.8L15 20h.2A3 3 0 1 0 18 16a3 3 0 0 0-2 .8l-5.6-3.2a3 3 0 0 0 0-1.2L16 9.2A3 3 0 0 0 18 10Z"/></svg>
+          <span class="btn__tag">सुणाओ</span>
+        </button>
+      </section>
+
+      <div class="grille" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <p class="footnote">
+    गीत यूट्यूब सूं बाजै — <span>songs stream from YouTube; nothing is hosted here.</span>
+  </p>
+</main>
+
+<!-- sleep timer sheet -->
+<div class="sheet" id="sleepsheet" role="dialog" aria-modal="false" aria-label="Sleep timer" hidden>
+  <p class="sheet__title">कद तक सुणोगा? <span>Sleep timer</span></p>
+  <div class="sheet__row">
+    <button class="chip" data-min="15" type="button">15 मिनट</button>
+    <button class="chip" data-min="30" type="button">30 मिनट</button>
+    <button class="chip" data-min="60" type="button">60 मिनट</button>
+    <button class="chip chip--off" data-min="0" type="button">बंद करो</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<p class="sr-only" id="announce" aria-live="polite"></p>
+
+<!-- the video player itself is never seen; this is a radio -->
+<div class="yt-host" aria-hidden="true"><div id="yt-host"></div></div>
+
+<script src="js/host.js"></script>
+<script src="js/player.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

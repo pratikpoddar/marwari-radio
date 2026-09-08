@@ -1,0 +1,106 @@
+{
+  "_readme": "The only file you need to edit to change what Marwari Radio plays. Add/remove/reorder tracks inside a station's `tracks` array. `source.kind` is currently always 'youtube' - the player adapter in js/player.js is what maps a kind to a real player, so a licensed-audio kind can be added there without touching anything else. Every youtubeId below was checked for playableInEmbed=true; if one dies later the host announces it and skips.",
+  "stations": [
+    {
+      "id": "bhakti",
+      "name": "भक्ति बेला",
+      "nameRoman": "Bhakti Bela",
+      "dialLabel": "BHAKTI",
+      "tagline": "सुबह सुबह प्रभु को नाम",
+      "taglineRoman": "Subah subah Prabhu ko naam",
+      "occasion": "Morning bhajans and aarti, like home at 7 AM",
+      "toran": false,
+      "bell": true,
+      "tracks": [
+        { "title": "श्री हनुमान चालीसा", "titleRoman": "Shri Hanuman Chalisa", "artist": "Hariharan", "source": { "kind": "youtube", "youtubeId": "AETFvQonfV8" } },
+        { "title": "मंगल भवन अमंगल हारी", "titleRoman": "Mangal Bhawan Amangal Haari", "artist": "Ravindra Jain", "source": { "kind": "youtube", "youtubeId": "8ZctD4a5dvo" } },
+        { "title": "पायो जी मैंने राम रतन धन पायो", "titleRoman": "Payo Ji Maine Ram Ratan Dhan Payo", "artist": "Lata Mangeshkar", "source": { "kind": "youtube", "youtubeId": "eVzyOEhTBy8" } },
+        { "title": "खम्मा खम्मा हो म्हारा रुणीचे रा धणिया", "titleRoman": "Khamma Khamma Ho Mhara Runiche Ra Dhaniya", "artist": "Prakash Mali", "source": { "kind": "youtube", "youtubeId": "ogWJIe8vs5s" } },
+        { "title": "अच्युतम केशवम", "titleRoman": "Achyutam Keshavam", "artist": "Alka Yagnik", "source": { "kind": "youtube", "youtubeId": "3yczGKnskts" } },
+        { "title": "आरती कुंज बिहारी की", "titleRoman": "Aarti Kunj Bihari Ki", "artist": "Hariharan", "source": { "kind": "youtube", "youtubeId": "EMO1AT1UQf0" } },
+        { "title": "ओम जय जगदीश हरे", "titleRoman": "Om Jai Jagdish Hare", "artist": "Anuradha Paudwal", "source": { "kind": "youtube", "youtubeId": "NE3SWh9_vR4" } }
+      ]
+    },
+    {
+      "id": "shaadi",
+      "name": "शादी संगीत",
+      "nameRoman": "Shaadi Sangeet",
+      "dialLabel": "SANGEET",
+      "tagline": "हळदी चढ़ गी, गीत रुकै नीं",
+      "taglineRoman": "Haldi chadhi gi, geet rukai nee",
+      "occasion": "Mehndi and sangeet nights - the aunties' circle with the dholak",
+      "toran": true,
+      "bell": false,
+      "tracks": [
+        { "title": "विनायक रणत भंवर सूं आविया", "titleRoman": "Vinayak Ranat Bhanwar Su Aaviya", "artist": "Seema Mishra", "source": { "kind": "youtube", "youtubeId": "Bj2o09OW0tE" } },
+        { "title": "बन्ना रे बागा में झूला डाल्या", "titleRoman": "Banna Re Baga Me Jhula Dalya", "artist": "Seema Mishra", "source": { "kind": "youtube", "youtubeId": "3bRrFuJBlAs" } },
+        { "title": "बन्नी थारो चांद सरीखो मुखड़ो", "titleRoman": "Banni Tharo Chand Sariko Mukhdo", "artist": "Kapil Jangir, Komal Kanwar", "source": { "kind": "youtube", "youtubeId": "l30D94SWtWk" } },
+        { "title": "मेहंदी लगा के रखना", "titleRoman": "Mehndi Laga Ke Rakhna", "artist": "Lata Mangeshkar, Udit Narayan", "source": { "kind": "youtube", "youtubeId": "-bNwqXvMuB8" } },
+        { "title": "रंगीलो मारो ढोलना", "titleRoman": "Rangeelo Maro Dholna", "artist": "Shubha Mudgal, Sukhwinder Singh", "source": { "kind": "youtube", "youtubeId": "2bp7zdzWj3Y" } },
+        { "title": "बन्नो", "titleRoman": "Banno", "artist": "Tanu Weds Manu Returns", "source": { "kind": "youtube", "youtubeId": "Oju9kp8tLpY" } },
+        { "title": "आज मेरे यार दी शादी है", "titleRoman": "Aaj Mere Yaar Di Shaadi Hai", "artist": "Dosti", "source": { "kind": "youtube", "youtubeId": "yyYzL9Gr-PE" } }
+      ]
+    },
+    {
+      "id": "gangaur",
+      "name": "गणगौर अर तीज",
+      "nameRoman": "Gangaur & Teej",
+      "dialLabel": "GANGAUR",
+      "tagline": "लहरिया पहर लो सा",
+      "taglineRoman": "Leheriya pahar lo sa",
+      "occasion": "Gangaur geet, Teej songs, swings - new leheriya and ghevar",
+      "toran": true,
+      "bell": false,
+      "tracks": [
+        { "title": "गौर गौर गोमती", "titleRoman": "Gor Gor Gomti", "artist": "Gangaur pujan geet", "source": { "kind": "youtube", "youtubeId": "B8FBGVTvbIA" } },
+        { "title": "गौर गौर गणपति, ईसर पूजे पार्वती", "titleRoman": "Gaur Gaur Ganpati, Isar Puje Parvati", "artist": "Gangaur pujan geet", "source": { "kind": "youtube", "youtubeId": "djpjvlSC3Wc" } },
+        { "title": "घुड़लो घूमेला", "titleRoman": "Ghudlo Ghoomela", "artist": "Twinkle Vaishnav", "source": { "kind": "youtube", "youtubeId": "uFaxwdv8nt8" } },
+        { "title": "आयो आयो तीज त्योहार", "titleRoman": "Aayo Aayo Teej Tyohar", "artist": "Veena Music", "source": { "kind": "youtube", "youtubeId": "FMiUdosrTVU" } },
+        { "title": "झूला झूले राधा प्यारी", "titleRoman": "Jhula Jhule Radha Pyari", "artist": "Anjali Jain", "source": { "kind": "youtube", "youtubeId": "cK-HoFSzM3c" } },
+        { "title": "चौमासो", "titleRoman": "Chomaso", "artist": "Veena Music", "source": { "kind": "youtube", "youtubeId": "2E0u3Mu_eaw" } },
+        { "title": "म्हारो गोरबंद नखरालो", "titleRoman": "Mharo Gorbandh Nakhralo", "artist": "Seema Mishra", "source": { "kind": "youtube", "youtubeId": "tGfE0o4mdcU" } }
+      ]
+    },
+    {
+      "id": "rail",
+      "name": "रेल यात्रा",
+      "nameRoman": "Rail Yatra",
+      "dialLabel": "RAIL",
+      "tagline": "चालो, घर चालां",
+      "taglineRoman": "Chalo, ghar chalaan",
+      "occasion": "The summer train to Rajasthan, tiffin of puri-achar",
+      "toran": false,
+      "bell": false,
+      "tracks": [
+        { "title": "केसरिया बालम आवो नीं", "titleRoman": "Kesariya Balam Aavo Ni", "artist": "Mame Khan", "source": { "kind": "youtube", "youtubeId": "fq9UfNG1pRc" } },
+        { "title": "पधारो म्हारे देस", "titleRoman": "Padharo Mhare Des", "artist": "Mame Khan", "source": { "kind": "youtube", "youtubeId": "jjiBw_Ys374" } },
+        { "title": "पणिहारी", "titleRoman": "Panihari", "artist": "Seema Mishra", "source": { "kind": "youtube", "youtubeId": "Wkm6qPgmnvI" } },
+        { "title": "म्हारी घूमर छै नखराली", "titleRoman": "Mhari Ghoomar Chhe Nakhrali", "artist": "Rajasthani folk", "source": { "kind": "youtube", "youtubeId": "w9KUhBnbAWc" } },
+        { "title": "चौधरी", "titleRoman": "Chaudhary", "artist": "Mame Khan, Amit Trivedi", "source": { "kind": "youtube", "youtubeId": "1gukvtH_a3I" } },
+        { "title": "काजळियो", "titleRoman": "Kajaliyo", "artist": "Aakanksha Sharma, Kapil Jangir", "source": { "kind": "youtube", "youtubeId": "tPx-7Grk_UY" } },
+        { "title": "निंबूड़ा निंबूड़ा", "titleRoman": "Nimbooda Nimbooda", "artist": "Kavita Krishnamurthy", "source": { "kind": "youtube", "youtubeId": "YLsIl0G0qlM" } },
+        { "title": "छैयां छैयां", "titleRoman": "Chaiyya Chaiyya", "artist": "Sukhwinder Singh, Sapna Awasthi", "source": { "kind": "youtube", "youtubeId": "K-pX4qwtAxA" } }
+      ]
+    },
+    {
+      "id": "purani",
+      "name": "पुराणी यादें",
+      "nameRoman": "Purani Yaadein",
+      "dialLabel": "YAADEIN",
+      "tagline": "दुकान रो रेडियो",
+      "taglineRoman": "Dukaan ro radio",
+      "occasion": "The Lata-Kishore-Mukesh era the elders hum at the shop counter",
+      "toran": false,
+      "bell": false,
+      "tracks": [
+        { "title": "लग जा गले", "titleRoman": "Lag Ja Gale", "artist": "Lata Mangeshkar", "source": { "kind": "youtube", "youtubeId": "vB1qh0eUv78" } },
+        { "title": "ज़िंदगी का सफर", "titleRoman": "Zindagi Ka Safar", "artist": "Kishore Kumar", "source": { "kind": "youtube", "youtubeId": "vLpRfaRiDnk" } },
+        { "title": "कभी कभी मेरे दिल में", "titleRoman": "Kabhi Kabhie Mere Dil Mein", "artist": "Mukesh", "source": { "kind": "youtube", "youtubeId": "BVnz6oSupUM" } },
+        { "title": "ये शाम मस्तानी", "titleRoman": "Yeh Shaam Mastani", "artist": "Kishore Kumar", "source": { "kind": "youtube", "youtubeId": "xP2OcqFcKSY" } },
+        { "title": "कहीं दूर जब दिन ढल जाए", "titleRoman": "Kahin Door Jab Din Dhal Jaye", "artist": "Mukesh", "source": { "kind": "youtube", "youtubeId": "iJlbuFnKssM" } },
+        { "title": "ओ मेरे दिल के चैन", "titleRoman": "O Mere Dil Ke Chain", "artist": "Kishore Kumar", "source": { "kind": "youtube", "youtubeId": "YwcRJbaQkFU" } },
+        { "title": "अजीब दास्तां है ये", "titleRoman": "Ajeeb Dastan Hai Yeh", "artist": "Lata Mangeshkar", "source": { "kind": "youtube", "youtubeId": "AU-hut9lGQ4" } }
+      ]
+    }
+  ]
+}
