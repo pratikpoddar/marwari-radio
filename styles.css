@@ -220,7 +220,7 @@ button { font: inherit; color: inherit; }
 
 /* the needle — the signature move */
 .dial__needle {
-  position: absolute; top: 2px; bottom: 4px; left: 10%;
+  position: absolute; top: 2px; bottom: 30px; left: 10%;
   width: 14px; margin-left: -7px; z-index: 3;
   display: flex; justify-content: center;
   transition: left .82s cubic-bezier(.36, 1.62, .3, 1);
@@ -586,8 +586,7 @@ button { font: inherit; color: inherit; }
 }
 
 @media (max-width: 380px) {
-  .btn { min-width: 52px; min-height: 52px; }
-  .btn--play { min-width: 70px; min-height: 70px; }
+  /* controls stay at the 56px / 78px touch targets even at 360px - they fit */
   .hostcard { gap: 9px; padding: 11px 12px; }
   .hostcard__motif { width: 38px; height: 38px; }
 }
@@ -599,3 +598,28 @@ button { font: inherit; color: inherit; }
   .toran i { animation: none; }
   .gate { transition: none; }
 }
+
+/* ------------------------------------------------- Tai's voice switch
+   Off by default: her lines read as cards, the songs start straight away. */
+.voicerow { display: flex; justify-content: flex-end; margin: 8px 2px 0; }
+.voice {
+  appearance: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 7px;
+  min-height: 44px; padding: 8px 14px; border-radius: 999px;
+  border: 1.5px solid rgba(242,207,98,.45);
+  background: rgba(0,0,0,.22);
+  color: rgba(255,238,196,.85);
+  font-family: var(--dev); font-size: 12.5px; line-height: 1;
+}
+.voice svg { width: 16px; height: 16px; fill: currentColor; opacity: .8; }
+.voice span {
+  font-family: var(--rom); font-size: 10.5px; letter-spacing: .1em;
+  text-transform: uppercase; opacity: .65;
+}
+.voice[data-on="true"] {
+  border-color: var(--gold-lt);
+  background: rgba(242,207,98,.16);
+  color: #fff6de;
+}
+.voice[data-on="true"] svg { opacity: 1; }
+.voice[data-on="true"] span { opacity: .8; }

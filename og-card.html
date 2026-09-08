@@ -44,11 +44,32 @@
     </svg>
   </div>
   <div>
-    <h1>म्हारो रेडियो</h1>
-    <p class="rom">MARWARI &middot; RADIO</p>
-    <p class="tag">राम राम सा! पधारो म्हारे देस।<br>ताई गीतां रे बीच में मारवाड़ी में बतळावै।</p>
-    <div class="chips">
+    <h1 id="h1">म्हारो रेडियो</h1>
+    <p class="rom" id="rom">MARWARI &middot; RADIO</p>
+    <p class="tag" id="tag">राम राम सा! पधारो म्हारे देस।<br>ताई गीतां रे बीच में मारवाड़ी में बतळावै।</p>
+    <div class="chips" id="chips">
       <span>भक्ति बेला</span><span>शादी संगीत</span><span>गणगौर अर तीज</span><span>रेल यात्रा</span><span>पुराणी यादें</span>
     </div>
   </div>
 </div></div>
+<script>
+/* og-card.html?station=<id> renders that station's card; no query = the
+   home card. scripts/build.py screenshots each one into assets/. */
+(async function () {
+  var want = new URLSearchParams(location.search).get('station');
+  document.documentElement.dataset.ready = '0';
+  if (!want) { document.documentElement.dataset.ready = '1'; return; }
+  var cfg = await (await fetch('stations.json')).json();
+  var s = cfg.stations.filter(function (x) { return x.id === want; })[0];
+  if (!s) { document.documentElement.dataset.ready = '1'; return; }
+  document.getElementById('h1').textContent = s.name;
+  document.getElementById('rom').innerHTML = s.nameRoman.toUpperCase().split('').join('') ;
+  document.getElementById('rom').textContent = s.nameRoman.toUpperCase();
+  document.getElementById('tag').innerHTML =
+    s.tagline + '<br><span style="font-size:.8em;opacity:.85">' + s.occasion + '</span>';
+  document.getElementById('chips').innerHTML = s.tracks.slice(0, 4).map(function (t) {
+    return '<span>' + t.title + '</span>';
+  }).join('') + '<span>ताई · Tai</span>';
+  document.documentElement.dataset.ready = '1';
+})();
+</script>

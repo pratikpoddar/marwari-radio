@@ -20,6 +20,7 @@
     hostcard: $('hostcard'), hostDev: $('host-dev'), hostRom: $('host-rom'), hostEn: $('host-en'),
     btnPlay: $('btn-play'), btnNext: $('btn-next'), btnSleep: $('btn-sleep'), btnShare: $('btn-share'),
     sleepTag: $('sleep-tag'), sheet: $('sleepsheet'), toast: $('toast'),
+    btnVoice: $('btn-voice'), btnVoiceState: $('btn-voice-state'),
     announce: $('announce'), toran: $('toran')
   };
 
@@ -38,8 +39,16 @@
     sleepAt: 0,
     sleepTimer: null,
     listenedFrom: 0,
-    signedOffAt: 0
+    signedOffAt: 0,
+    /* Tai's spoken voice is OFF by default: hearing her announce every song
+       change gets tiresome fast, and waiting for her to finish before the
+       music starts is worse. Her lines still appear on the card - that was
+       always the subtitle - and the switch below turns the audio back on. */
+    voice: false
   };
+  try {
+    state.voice = localStorage.getItem('mr:voice') === 'on';
+  } catch (e) {}
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -136,10 +145,27 @@
   }
   function say(line) {
     if (!line) return Promise.resolve();
+    if (!state.voice) { showCard(line); return Promise.resolve(); }
     el.hostcard.classList.add('is-speaking');
     return Tai.speakLine(line, { onCard: showCard }).then(function () {
       el.hostcard.classList.remove('is-speaking');
     });
+  }
+
+  /**
+   * Tai's lines, delivered without ever making the listener wait: with her
+   * voice off the cards just appear (the next one a few seconds later) and
+   * the song starts at once; with it on we let her finish speaking first.
+   */
+  function deliver(lines, mySeq) {
+    lines = lines.filter(Boolean);
+    if (!lines.length) return Promise.resolve();
+    if (state.voice) return sayAll(lines, mySeq);
+    showCard(lines[0]);
+    lines.slice(1).forEach(function (line, i) {
+      setTimeout(function () { if (mySeq === state.seq) showCard(line); }, (i + 1) * 4200);
+    });
+    return Promise.resolve();
   }
   /** speak a sequence of lines, bailing out if the dial moved meanwhile */
   function sayAll(lines, mySeq) {
@@ -290,7 +316,7 @@
       state.patterEvery = 2 + Math.floor(Math.random() * 2);
     }
     if (!lines.length) { playCurrent(); return; }
-    sayAll(lines, mySeq).then(function () {
+    deliver(lines, mySeq).then(function () {
       if (mySeq === state.seq) playCurrent();
     });
   }
@@ -325,9 +351,35 @@
     track('station-tune', station().id);
 
     var lines = [ first ? Tai.line('welcome') : Tai.line('tune'), Tai.stationLine(station().id) ];
-    sayAll(lines, mySeq).then(function () {
+    deliver(lines, mySeq).then(function () {
       if (mySeq === state.seq) playCurrent();
     });
+  }
+
+  /* ====================================================== Tai's voice switch */
+  function paintVoice() {
+    var on = state.voice;
+    el.btnVoice.dataset.on = String(on);
+    el.btnVoice.setAttribute('aria-pressed', String(on));
+    el.btnVoiceState.textContent = on ? 'चालू · on' : 'बंद · off';
+    if (on && !Tai.hasVoice()) {
+      el.btnVoiceState.textContent = 'आवाज़ कोनी · no voice';
+    }
+  }
+  function toggleVoice() {
+    state.voice = !state.voice;
+    try { localStorage.setItem('mr:voice', state.voice ? 'on' : 'off'); } catch (e) {}
+    paintVoice();
+    track('voice-toggle', state.voice ? 'on' : 'off');
+    if (!state.voice) {
+      Tai.shutUp();
+      el.hostcard.classList.remove('is-speaking');
+      toast('ताई अब चुपचाप — Tai now speaks on the card only');
+    } else if (!Tai.hasVoice()) {
+      toast('इस डिवाइस पे हिंदी आवाज़ कोनी — no Hindi voice on this device');
+    } else {
+      say(Tai.line('welcome'));
+    }
   }
 
   /* ============================================================ the gate */
@@ -335,10 +387,9 @@
     var s = station();
     var greet = Tai.line('welcome');
     el.gateLine.textContent = greet.dev + '  ' + (s ? '(' + s.name + ')' : '');
-    if (!Tai.hasVoice()) {
-      el.gateNote.textContent =
-        'No Hindi voice on this device — Tai will speak on the card instead.';
-    }
+    el.gateNote.textContent = state.voice
+      ? 'Tai will greet you, then the songs start.'
+      : "Tai's lines show on a card. Her voice is off — there's a switch under it.";
   }
   function closeGate() {
     el.gate.hidden = true;
@@ -377,6 +428,7 @@
         say(Tai.line('signoff')).then(function () {
           if (mySeq === state.seq) TrackSource.setVolume(100);
         });
+        if (!state.voice) TrackSource.setVolume(100);
         setSleep(0);
       }
     }, 300);
@@ -385,7 +437,11 @@
   /* =============================================================== share */
   function shareStation() {
     var s = station();
-    var url = location.origin + location.pathname + '?channel=' + s.id;
+    /* /s/<station>/ is a tiny page carrying that station's own Open Graph
+       tags, so the link unfurls with the right card in a WhatsApp group and
+       then bounces the reader to ?channel=<station>. */
+    var base = location.origin + location.pathname.replace(/index\.html?$/, '');
+    var url = base + 's/' + s.id + '/';
     var text = 'म्हारी याद आ गी — ' + s.name + ' on Marwari Radio. राम राम सा।\n' +
                'Mhari yaad aa gi — ' + s.nameRoman + ' on Marwari Radio. Ram ram sa.';
     track('share', s.id);
@@ -467,6 +523,7 @@
     });
 
     el.btnShare.addEventListener('click', shareStation);
+    el.btnVoice.addEventListener('click', toggleVoice);
 
     document.addEventListener('keydown', function (e) {
       if (e.target.matches('input, textarea')) return;
@@ -537,6 +594,7 @@
       paintDial(false);
       paintPlate();
       paintToran();
+      paintVoice();
       openGate();
 
       if (window.Analytics) {
